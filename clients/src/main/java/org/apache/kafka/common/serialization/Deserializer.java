@@ -22,7 +22,7 @@ import java.io.Closeable;
 import java.util.Map;
 
 /**
- * An interface for converting bytes to objects.
+ * An interface for converting bytes to objects. 反序列化的操作是在Kafka Consumer中完成的
  *
  * A class that implements this interface is expected to have a constructor with no parameters.
  * <p>
@@ -33,7 +33,7 @@ import java.util.Map;
 public interface Deserializer<T> extends Closeable {
 
     /**
-     * Configure this class.
+     * Configure this class. 用来配置当前类。
      * @param configs configs in key/value pairs
      * @param isKey whether is for key or value
      */
@@ -43,6 +43,7 @@ public interface Deserializer<T> extends Closeable {
 
     /**
      * Deserialize a record value from a byte array into a value or object.
+     * 用来执行反序列化。如果data为null建议处理的时候直接返回null而不是抛出一个异常。
      * @param topic topic associated with the data
      * @param data serialized bytes; may be null; implementations are recommended to handle null by returning a value or null rather than throwing an exception.
      * @return deserialized typed data; may be null
@@ -61,7 +62,7 @@ public interface Deserializer<T> extends Closeable {
     }
 
     /**
-     * Close this deserializer.
+     * Close this deserializer. 用来关闭当前序列化器。
      * <p>
      * This method must be idempotent as it may be called multiple times.
      */

@@ -25,6 +25,8 @@ public interface Configurable {
 
     /**
      * Configure this class with the given key-value pairs
+     *
+     * 用来初始化此类的方法，这个是ProducerInterceptor接口的父接口Configurable中的方法。
      */
     void configure(Map<String, ?> configs);
 

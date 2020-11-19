@@ -22,7 +22,7 @@ import java.io.Closeable;
 import java.util.Map;
 
 /**
- * An interface for converting objects to bytes.
+ * An interface for converting objects to bytes.  序列化操作是在拦截器（Interceptor）执行之后并且在分配分区(partitions)之前执行的。
  *
  * A class that implements this interface is expected to have a constructor with no parameter.
  * <p>
@@ -33,7 +33,7 @@ import java.util.Map;
 public interface Serializer<T> extends Closeable {
 
     /**
-     * Configure this class.
+     * Configure this class. 用来配置当前类。
      * @param configs configs in key/value pairs
      * @param isKey whether is for key or value
      */
@@ -42,7 +42,7 @@ public interface Serializer<T> extends Closeable {
     }
 
     /**
-     * Convert {@code data} into a byte array.
+     * Convert {@code data} into a byte array. 用来执行序列化。
      *
      * @param topic topic associated with data
      * @param data typed data
@@ -51,7 +51,7 @@ public interface Serializer<T> extends Closeable {
     byte[] serialize(String topic, T data);
 
     /**
-     * Convert {@code data} into a byte array.
+     * Convert {@code data} into a byte array. 用来执行序列化。
      *
      * @param topic topic associated with data
      * @param headers headers associated with the record
@@ -63,7 +63,7 @@ public interface Serializer<T> extends Closeable {
     }
 
     /**
-     * Close this serializer.
+     * Close this serializer. 用来关闭当前序列化器。一般情况下这个方法都是个空方法，如果实现了此方法，必须确保此方法的幂等性，因为这个方法很可能会被KafkaProducer调用多次。
      * <p>
      * This method must be idempotent as it may be called multiple times.
      */
