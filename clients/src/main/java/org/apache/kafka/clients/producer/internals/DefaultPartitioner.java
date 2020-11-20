@@ -50,12 +50,16 @@ public class DefaultPartitioner implements Partitioner {
      * @param cluster The current cluster metadata
      */
     public int partition(String topic, Object key, byte[] keyBytes, Object value, byte[] valueBytes, Cluster cluster) {
+        //如果key为null，则按照一种轮询的方式来计算分区分配
         if (keyBytes == null) {
             return stickyPartitionCache.partition(topic, cluster);
-        } 
+        }
+        //如果key不为null则使用称之为murmur的Hash算法（非加密型Hash函数，具备高运算性能及低碰撞率）来计算分区分配。
+        // 根据topic从集群中取出分区信息
         List<PartitionInfo> partitions = cluster.partitionsForTopic(topic);
+        // 有多少个分区
         int numPartitions = partitions.size();
-        // hash the keyBytes to choose a partition
+        // hash the keyBytes to choose a partition 使用murmur的Hash算法
         return Utils.toPositive(Utils.murmur2(keyBytes)) % numPartitions;
     }
 

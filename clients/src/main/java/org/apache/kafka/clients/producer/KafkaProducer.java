@@ -1258,11 +1258,12 @@ public class KafkaProducer<K, V> implements Producer<K, V> {
     }
 
     /**
-     * computes partition for given record.
+     * computes partition for given record. 先判断有无指明ProducerRecord的partition字段，如果没有指明，则再进一步计算分区
      * if the record has partition returns the value otherwise
      * calls configured partitioner class to compute the partition.
      */
     private int partition(ProducerRecord<K, V> record, byte[] serializedKey, byte[] serializedValue, Cluster cluster) {
+        // 获取编号
         Integer partition = record.partition();
         return partition != null ?
                 partition :

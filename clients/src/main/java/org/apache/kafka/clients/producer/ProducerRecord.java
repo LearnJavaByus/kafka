@@ -47,12 +47,17 @@ import java.util.Objects;
  * {@link RecordMetadata}
  */
 public class ProducerRecord<K, V> {
-
+    //所要发送的topic
     private final String topic;
+    //指定的partition序号
     private final Integer partition;
+    //一组键值对，与RabbitMQ中的headers类似，kafka0.11.x版本才引入的一个属性
     private final Headers headers;
+    //消息的key
     private final K key;
+    //消息的value,即消息体
     private final V value;
+    //消息的时间戳，可以分为Create_Time和LogAppend_Time之分，这个以后的文章中再表。123456
     private final Long timestamp;
 
     /**
